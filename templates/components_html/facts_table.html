@@ -1,0 +1,13 @@
+<div class="fast-facts-container">
+    <div class="fast-facts-content">
+
+        {% for fact in facts %}
+        <div class="fact-box">
+            <h3 class="fact-number">{{ fact.number }}</h3>
+            <p class="fact-description">{{ fact.description }}</p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+

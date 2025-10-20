@@ -1,0 +1,12 @@
+<div class="four-card-grid-container">
+    {% for card in cards %}
+    <div class="four-card-grid-box">
+        {% if card.image_src %}
+        <img src="{{ card.image_src }}" alt="{{ card.image_alt }}" class="four-card-grid-image">
+        {% endif %}
+        <h3 class="four-card-grid-title">{{ card.title }}</h3>
+        <p class="four-card-grid-description">{{ card.description }}</p>
+        <a href="{{ card.button_link }}" class="four-card-grid-button">{{ card.button_text }}</a>
+    </div>
+    {% endfor %}
+</div>

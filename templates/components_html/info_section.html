@@ -1,0 +1,17 @@
+<div class="section">
+    <div class="section-content">
+        <h2>{{ heading }}</h2>
+
+        {% for paragraph in paragraphs %}
+            <p>{{ paragraph }}</p>
+        {% endfor %}
+
+        {% if button_text and button_link %}
+        <a href="{{ button_link }}" class="section-button">{{ button_text }}</a>
+        {% endif %}
+    </div>
+
+    <div class="section-image">
+        <img src="{{ image_src }}" alt="{{ image_alt }}">
+    </div>
+</div>

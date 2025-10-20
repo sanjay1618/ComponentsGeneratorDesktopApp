@@ -1,0 +1,9 @@
+<div class="card-container">
+    {% for card in cards %}
+    <div class="card-box">
+        <img src="{{ card.image_src }}" alt="{{ card.image_alt }}" class="card-image{% if card.bordered %} bordered-image{% endif %}">
+        <h3 class="card-title">{{ card.title }}</h3>
+        <a href="{{ card.button_link }}" class="uw-theme-button">{{ card.button_text }}</a>
+    </div>
+    {% endfor %}
+</div>

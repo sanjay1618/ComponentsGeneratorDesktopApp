@@ -1,0 +1,33 @@
+<div class="hero-container shadow-background">
+
+  <figure class="hero-image-container">
+    <img 
+      src="{{ image_src }}" 
+      alt="{{ image_alt }}" 
+      class="hero-image" 
+      loading="lazy"
+    >
+    <figcaption class="hero-caption">
+      {{ image_caption }}
+    </figcaption>
+  </figure>
+
+  <div class="hero-content">
+    {% if heading %}
+      <h1 class="hero-heading">{{ heading }}</h1>
+    {% endif %}
+    
+    {% for paragraph in paragraphs %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+
+    <div class="hero-buttons">
+      {% for button in buttons %}
+        <a href="{{ button.link }}" class="uw-theme-button">
+          {{ button.text }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,89 @@
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.hero-image-container {
+  width: 100%;
+  margin: 0;
+}
+
+.hero-image {
+  width: 100%;
+  max-height: 620px; 
+  height: auto;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.hero-caption {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.hero-content {
+  width: 100%;
+  padding: 20px;
+  text-align: left;
+}
+
+.hero-heading {
+  color: #4b2e83;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: left;
+  margin-top: 20px;
+}
+
+.uw-theme-button {
+  background-color: #4b2e83;
+  color: #ffffff !important;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.uw-theme-button:hover {
+  background-color: #381d58;
+  color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .hero-content {
+    text-align: center;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-caption {
+    text-align: center;
+  }
+}
