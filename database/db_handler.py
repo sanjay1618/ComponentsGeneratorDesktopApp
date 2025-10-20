@@ -1,12 +1,71 @@
 import sqlite3
 import json
 import os
+import sys
+import shutil
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'app_data.db')
+APP_NAME = "ComponentsGenerator"
+DB_FILENAME = "app_data.db"
+
+def _user_data_dir():
+    # Cross-platform writable app data dir
+    if os.name == "nt":  # Windows
+        base = os.environ.get("APPDATA", os.path.expanduser("~"))
+        return os.path.join(base, APP_NAME)
+    else:
+        # Linux/macOS fallback
+        base = os.path.join(os.path.expanduser("~"), ".local", "share")
+        return os.path.join(base, APP_NAME)
+
+def _bundled_path(relpath: str) -> str:
+    """
+    Path to a resource bundled with PyInstaller onefile (read-only),
+    or next to this file when running from source.
+    """
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, relpath)
+
+def _ensure_db_exists(writable_db_path: str):
+    """
+    If you ship a pre-seeded DB (optional) next to this file as 'app_data.db',
+    copy it to the writable location on first run. Otherwise, we'll create
+    an empty DB and init tables.
+    """
+    if os.path.exists(writable_db_path):
+        return
+
+    os.makedirs(os.path.dirname(writable_db_path), exist_ok=True)
+
+    # Optional seed: a bundled DB located next to this module (if you add one)
+    seeded_src = _bundled_path(DB_FILENAME)
+    if os.path.exists(seeded_src):
+        try:
+            shutil.copy2(seeded_src, writable_db_path)
+            return
+        except Exception:
+            # Fall back to creating a fresh, empty DB
+            pass
+
+    # Create an empty file; tables will be created by init_db()
+    open(writable_db_path, "a").close()
+
+def _get_db_path() -> str:
+    """
+    Always use a user-writable location for the runtime database.
+    This avoids 'sqlite3.OperationalError: unable to open database file'
+    when running under PyInstaller onefile (read-only temp dir).
+    """
+    user_dir = _user_data_dir()
+    os.makedirs(user_dir, exist_ok=True)
+    return os.path.join(user_dir, DB_FILENAME)
 
 class DBHandler:
     def __init__(self):
-        self.conn = sqlite3.connect(DB_PATH)
+        self.db_path = _get_db_path()
+        _ensure_db_exists(self.db_path)
+
+        # Now open the DB from the writable location
+        self.conn = sqlite3.connect(self.db_path)
         self.conn.row_factory = sqlite3.Row
         self.init_db()
 
@@ -118,4 +177,5 @@ class DBHandler:
         self.conn.commit()
 
     def close(self):
-        self.conn.close()
+        if hasattr(self, "conn") and self.conn:
+            self.conn.close()
