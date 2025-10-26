@@ -1,9 +1,9 @@
--name : Building and packaging exe file
-on : 
-  -push:
-    branches:
-      -main
-  -workflow_dispatch:
+name: Build EXE
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build_exe:
@@ -27,12 +27,8 @@ jobs:
         run: |
           pyinstaller --onefile --noconsole --collect-all PyQt5 --collect-all jinja2 -n ComponentsGenerator main.py
 
-
       - name: Archive exe file
         uses: actions/upload-artifact@v3
         with:
           name: exe-file
-
-
-  
-  
+          path: dist/ComponentsGenerator.exe
