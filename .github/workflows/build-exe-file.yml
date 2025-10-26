@@ -5,6 +5,8 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+env:
+  APP_NAME: ComponentsGenerator
 
 jobs:
   build_exe:
@@ -26,7 +28,7 @@ jobs:
 
       - name: Build exe file
         run: |
-          pyinstaller --onefile --noconsole --collect-all PyQt5 --collect-all jinja2 -n ComponentsGenerator main.py
+          pyinstaller --onefile --noconsole --collect-all PyQt5 --collect-all jinja2 -n ${{ env.APP_NAME }} main.py
 
       - name: Archive exe file
         uses: actions/upload-artifact@v4
