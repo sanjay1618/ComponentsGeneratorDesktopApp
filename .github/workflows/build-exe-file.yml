@@ -3,7 +3,7 @@ run-name: Pipeline run by @${{ github.actor }}
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, newTest ]
   workflow_dispatch:
 env:
   APP_NAME: ComponentsGenerator
