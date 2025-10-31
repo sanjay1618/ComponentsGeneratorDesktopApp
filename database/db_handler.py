@@ -4,8 +4,8 @@ import os
 import sys
 import shutil
 
-APP_NAME = "ComponentsGenerator"
-DB_FILENAME = "app_data.db"
+APP_NAME = "ComponentsCreatorForDrupalPages"
+DB_FILENAME = "database_for_components.db"
 
 def _user_data_dir():
     # Cross-platform writable app data dir
