@@ -3,7 +3,7 @@ run-name: Pipeline run by @${{ github.actor }}
 
 on:
   push:
-    branches: [ main, newTest ]
+    branches: [ main, newTest, pageGeneratorBugFix]
   workflow_dispatch:
 env:
   APP_NAME: ComponentsGenerator
@@ -28,10 +28,11 @@ jobs:
 
       - name: Build exe file
         run: |
-          pyinstaller --onefile --noconsole --collect-all PyQt5 --collect-all jinja2 -n ${{ env.APP_NAME }} main.py
+          pyinstaller --onefile --noconsole --collect-all PyQt5 --collect-all jinja2 --add-data "templates;templates" --add-data "database\database_for_components.db;database"-n ComponentsGeneratorApp main.py
+
 
       - name: Archive exe file
         uses: actions/upload-artifact@v4
         with:
           name: exe-file
-          path: dist/ComponentsGenerator.exe
+          path: dist/ComponentsGeneratorApp.exe
